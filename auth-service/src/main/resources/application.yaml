@@ -1,11 +1,11 @@
 server:
-  port: 8189
+  port: 8188
   servlet:
-    context-path: /winter-market-core
+    context-path: /winter-market-auth
 spring:
   datasource:
-    url: jdbc:h2:mem:mydatabase;MODE=PostgreSQL
     driver-class-name: org.h2.Driver
+    url: jdbc:h2:file:./users;MODE=PostgreSQL
     username: sa
     password:
   jpa:
@@ -18,10 +18,7 @@ spring:
       enabled: true
       setting:
         web-allow-others: false
-integrations:
-  cart-service:
-    url: http://localhost:8190/winter-market-carts
-    connect-timeout: 5000
-    read-timeout: 10000
-    write-timeout: 5000
+jwt:
+  secret: jtnuidDDDDrvtidmiso,xisjfAAojzcsjxfsxog.joiv743895734f
+  lifetime: 36000000
 

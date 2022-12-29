@@ -23,31 +23,22 @@ public class CartService {
     }
     public void add(Long productId){
         ProductDto productDto = productServiceIntegration.
-                getProductById(productId).
-                orElseThrow(()-> new ResourceNotFoundException
-                        ("Невозможно добавить в корзину," +
-                                " id не найден. id: " + productId));
+                getProductById(productId);
         tempCart.add(productDto);
     }
 
     public void increaseProductInCart(Long id) {
-       ProductDto productDto = productServiceIntegration.getProductById(id).
-               orElseThrow(()->
-                       new ResourceNotFoundException("Невозможно найти объект с id: "+ id));
+       ProductDto productDto = productServiceIntegration.getProductById(id);
         tempCart.increaseProduct(productDto);
     }
 
     public void decreaseProductInCart(Long id) {
-        ProductDto productDto = productServiceIntegration.getProductById(id).
-                orElseThrow(()->
-                        new ResourceNotFoundException("Невозможно найти объект с id: "+ id));
+        ProductDto productDto = productServiceIntegration.getProductById(id);
         tempCart.decreaseProduct(productDto);
     }
 
     public void removeProductById(Long id) {
-        ProductDto productDto = productServiceIntegration.getProductById(id).
-                orElseThrow(()->
-                        new ResourceNotFoundException("Невозможно найти объект с id: "+ id));
+        ProductDto productDto = productServiceIntegration.getProductById(id);
         tempCart.remove(productDto);
     }
 

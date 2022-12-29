@@ -1,4 +1,4 @@
-package ru.gb.wintermarket.core.configs;
+package ru.gb.wintermarket.auth.configs;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,14 +12,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 @Slf4j
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final JwtRequestFilter jwtRequestFilter;
+//    private final JwtRequestFilter jwtRequestFilter;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -27,11 +26,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()//отключение токенов для REST
                 .cors().disable()
                 .authorizeRequests()
-                .antMatchers("/secured").authenticated()
-                .antMatchers("/auth_check").authenticated()
-                .antMatchers("/orders").authenticated()
-                .antMatchers("/api/v1/cart/**").authenticated()
-                .antMatchers("/api/v1/orders/**").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)//сессии не используются по скольку у нас REST!
@@ -41,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));//- 401 UNAUTHORIZED.
 
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+//        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
 
@@ -51,8 +45,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
     @Override
     @Bean
-            //AuthenticationManager -> приходит u/p он связывается с
-            // UserDetailsService и если ок -> возвратит u/p(UserDetailsService)
     public AuthenticationManager authenticationManagerBean() throws Exception{
         return super.authenticationManagerBean();
     }

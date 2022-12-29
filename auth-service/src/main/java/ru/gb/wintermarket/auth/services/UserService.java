@@ -1,4 +1,4 @@
-package ru.gb.wintermarket.core.services;
+package ru.gb.wintermarket.auth.services;
 
 
 import lombok.RequiredArgsConstructor;
@@ -9,10 +9,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.gb.wintermarket.core.entity.Role;
-import ru.gb.wintermarket.core.entity.User;
-import ru.gb.wintermarket.core.repositories.UserRepository;
-
+import ru.gb.wintermarket.auth.entities.Role;
+import ru.gb.wintermarket.auth.entities.User;
+import ru.gb.wintermarket.auth.repositories.UserRepository;
 
 import java.util.Collection;
 import java.util.List;
@@ -29,7 +28,6 @@ public class UserService implements UserDetailsService {
 
     @Override
     @Transactional
-    //возвратит ...userdetails.User!!!
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByUsername(username).//.get();
                 orElseThrow(() -> new UsernameNotFoundException(String.format("User '%s' not found", username)));
@@ -38,7 +36,6 @@ public class UserService implements UserDetailsService {
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-        //Строка перепаковывается в строку другого объекта
         return roles.stream().map(role ->
                         new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
