@@ -11,7 +11,7 @@ import ru.gb.wintermarket.carts.services.CartService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/cart")
-@CrossOrigin("*")
+//@CrossOrigin("*")
 public class CartController {
     private final CartService cartService;
     private final CartConverter cartConverter;

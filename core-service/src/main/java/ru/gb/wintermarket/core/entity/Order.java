@@ -21,9 +21,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "username")
+    private String username;
 
     @OneToMany(mappedBy = "order",
             cascade = CascadeType.PERSIST)//сохраняет по цепочке items
